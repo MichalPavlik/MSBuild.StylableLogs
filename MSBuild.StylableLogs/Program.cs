@@ -58,7 +58,6 @@ namespace MSBuild.StylableLogs
             //      no intellisense,
             //      no compile time checks,
             //      no extensibility (no support for custom markup),
-            //      no support for localization via string format,
             //      markup must be removed for localization and backward compatibility - Spectre has API for markup removal, but assembly must be loaded in all environments (VS)
             logger.LogSpectreMarkup($"Hello, we support these colors in our logger: [red]{nameof(Red)}[/], [green]{nameof(Green)}[/], [blue]Blue[/], [yellow]Yellow[/]!");
 
