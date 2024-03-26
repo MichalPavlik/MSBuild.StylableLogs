@@ -71,6 +71,43 @@ namespace MSBuild.StylableLogs
             //      no compile time checks,
             //      complexity
             logger.LogCustomMarkup($"Hello, we support these colors in our logger: [red]{nameof(Red)}[/], [green]{nameof(Green)}[/], [blue]Blue[/], [yellow]Yellow[/]!");
+
+            // ----- Progress reporting -----
+
+            Console.WriteLine("Press Enter to show progress reporting");
+            Console.ReadLine();
+            Console.Clear();
+
+            ProgressLogger progressLogger = new();
+
+            using (ProgressInfo progress = progressLogger.GetProgressInfo("Processing items: "))
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    var operation = progress.CreateTaskOperation($"Processing item {i}");
+
+                    Thread.Sleep(100);
+
+                    if (i == 40)
+                    {
+                        progress.TotalOperations = 100;
+                    }
+
+                    if (i % 3 == 0)
+                    {
+                        operation.Completed();
+                    }
+                    else if (i % 5 == 0)
+                    {
+                        operation.Failed($"Something went wrong with item {i}.");
+                    }
+                    else
+                    {
+                        operation.Skipped();
+                    }
+                }
+            }
+
         }
     }
 }
